@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %} {% block content %}
+<div class="text-center">
+  <h1 class="mb-4">Welcome to the ML Dashboard</h1>
+  <p class="mb-4">
+    Explore your dataset, visualize insights, and evaluate machine learning
+    models.
+  </p>
+
+  <div class="d-grid gap-3 col-6 mx-auto">
+    <a href="{% url 'data_view' %}" class="btn btn-primary btn-lg">📊 Data</a>
+    <a href="{% url 'visualizations' %}" class="btn btn-success btn-lg"
+      >📈 Visualizations</a
+    >
+    <a href="{% url 'models_view' %}" class="btn btn-warning btn-lg"
+      >🤖 ML Models</a
+    >
+  </div>
+</div>
+{% endblock %}

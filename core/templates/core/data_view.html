@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %} {% block content %}
+<h2 class="mb-4">📊 Dataset Overview</h2>
+
+<h4>🔹 Dataset Preview</h4>
+<div class="table-responsive" style="max-height: 400px; overflow-y: auto">
+  {{ head|safe }}
+</div>
+
+<hr />
+
+<h4>🔹 Dataset Info</h4>
+<ul>
+  <li><strong>Rows:</strong> {{ info.rows }}</li>
+  <li><strong>Columns:</strong> {{ info.columns }}</li>
+  <li>
+    <strong>Data Types:</strong>
+    <ul>
+      {% for col, dtype in info.column_types.items %}
+      <li>{{ col }}: {{ dtype }}</li>
+      {% endfor %}
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h4>🔹 Missing Values</h4>
+{% if missing_html %}
+<div class="table-responsive">{{ missing_html|safe }}</div>
+{% else %}
+<p>No missing values detected ✅</p>
+{% endif %}
+
+<hr />
+
+<h4>🔹 Statistical Summary</h4>
+<div class="table-responsive">{{ describe_html|safe }}</div>
+
+{% endblock %}

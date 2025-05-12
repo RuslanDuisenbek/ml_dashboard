@@ -1,0 +1,7 @@
+{% extends 'core/base.html' %} {% block content %}
+
+<h2 class="mb-4">📊 Visualizations</h2>
+
+{% for plot in plots %}
+<div class="mb-5 border rounded shadow p-3">{{ plot|safe }}</div>
+{% endfor %} {% endblock %}

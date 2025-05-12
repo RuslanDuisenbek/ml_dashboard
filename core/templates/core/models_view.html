@@ -1,0 +1,154 @@
+{#{% extends 'core/base.html' %}#}
+{##}
+{#{% block content %}#}
+{#    <div class="container mt-5">#}
+{#        <div class="text-center">#}
+{#            <h1 class="mb-4">Machine Learning Model Results</h1>#}
+{##}
+{#            <p class="mb-4">#}
+{#                <strong>Model Accuracy:</strong> {{ accuracy }}%#}
+{#            </p>#}
+{##}
+{#            <p class="mb-4">#}
+{#                <strong>Number of Estimators:</strong> {{ num_estimators }}#}
+{#            </p>#}
+{##}
+{#            {% if predicted_job %}#}
+{#                <div class="alert alert-success mt-4">#}
+{#                    <h3>🔍 Recommended Job Title: {{ predicted_job }}</h3>#}
+{#                    <p><strong>Education Required:</strong> {{ user_input.education_required }}</p>#}
+{#                    <p><strong>Expected Salary:</strong> {{ user_input.salary_avg }}</p>#}
+{#                    <p><strong>Experience (Years):</strong> {{ user_input.experience_years }}</p>#}
+{#                    <p><strong>Location:</strong> {{ user_input.filtered_location }}</p>#}
+{#                </div>#}
+{#            {% endif %}#}
+{##}
+{##}
+{#           #}
+{#            <h2 class="mt-5 mb-4">Enter Your Information for Job Prediction:</h2>#}
+{#            <form method="post">#}
+{#                {% csrf_token %}#}
+{##}
+{#                <div class="mb-3">#}
+{#                    <label for="education_required" class="form-label">Education Required:</label>#}
+{#                    <input type="text" class="form-control" id="education_required" name="education_required" required>#}
+{#                </div>#}
+{##}
+{#                <div class="mb-3">#}
+{#                    <label for="salary_avg" class="form-label">Expected Salary:</label>#}
+{#                    <input type="number" class="form-control" id="salary_avg" name="salary_avg" required>#}
+{#                </div>#}
+{##}
+{#                <div class="mb-3">#}
+{#                    <label for="experience_years" class="form-label">Experience (Years):</label>#}
+{#                    <input type="number" class="form-control" id="experience_years" name="experience_years" required>#}
+{#                </div>#}
+{##}
+{#                <div class="mb-3">#}
+{#                    <label for="filtered_location" class="form-label">Location:</label>#}
+{#                    <input type="text" class="form-control" id="filtered_location" name="filtered_location" required>#}
+{#                </div>#}
+{##}
+{#                <button type="submit" class="btn btn-primary btn-lg">Get Job Recommendation</button>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="mb-4">Machine Learning Model Results</h1>
+
+        <p class="mb-4">
+            <strong>Model Accuracy:</strong> {{ accuracy }}%
+        </p>
+
+        <p class="mb-4">
+            <strong>Number of Estimators:</strong> {{ num_estimators }}
+        </p>
+
+        {% if predicted_job %}
+            <div class="alert alert-success mt-4">
+                <h3>🔍 Recommended Job Title: {{ predicted_job }}</h3>
+                <p><strong>Education Required:</strong> {{ user_input.education_required }}</p>
+                <p><strong>Expected Salary:</strong> {{ user_input.salary_avg }}</p>
+                <p><strong>Experience (Years):</strong> {{ user_input.experience_years }}</p>
+                <p><strong>Location:</strong> {{ user_input.filtered_location }}</p>
+            </div>
+        {% endif %}
+
+        <h2 class="mt-5 mb-4">Enter Your Information for Job Prediction:</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="education_required" class="form-label">Education Required (enter number):</label>
+                <input type="number" class="form-control" id="education_required" name="education_required" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="salary_avg" class="form-label">Expected Salary:</label>
+                <input type="number" class="form-control" id="salary_avg" name="salary_avg" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="experience_years" class="form-label">Experience (Years):</label>
+                <input type="number" class="form-control" id="experience_years" name="experience_years" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="filtered_location" class="form-label">Location (enter number):</label>
+                <input type="number" class="form-control" id="filtered_location" name="filtered_location" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">Get Job Recommendation</button>
+        </form>
+
+        <hr class="mt-5 mb-4">
+
+        <div class="row text-start">
+            <div class="col-md-6">
+                <h4>🎓 Education Required Mapping:</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">0: высшее</li>
+                    <li class="list-group-item">1: незаконченное высшее</li>
+                    <li class="list-group-item">2: общее среднее (с 1 по 11/12 классы)</li>
+                    <li class="list-group-item">3: основное среднее (с 1 по 9 класс)</li>
+                    <li class="list-group-item">4: послевузовское</li>
+                    <li class="list-group-item">5: послесреднее</li>
+                    <li class="list-group-item">6: техническое и профессиональное</li>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <h4>📍 Filtered Location Mapping:</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">0: Акмолинская область</li>
+                    <li class="list-group-item">1: Актюбинская область</li>
+                    <li class="list-group-item">2: Алматинская область</li>
+                    <li class="list-group-item">3: Атырауская область</li>
+                    <li class="list-group-item">4: Восточно-Казахстанская область</li>
+                    <li class="list-group-item">5: Жамбылская область</li>
+                    <li class="list-group-item">6: Западно-Казахстанская область</li>
+                    <li class="list-group-item">7: Карагандинская область</li>
+                    <li class="list-group-item">8: Костанайская область</li>
+                    <li class="list-group-item">9: Кызылординская область</li>
+                    <li class="list-group-item">10: Мангистауская область</li>
+                    <li class="list-group-item">11: Область Абай</li>
+                    <li class="list-group-item">12: Область Жетісу</li>
+                    <li class="list-group-item">13: Область Ұлытау</li>
+                    <li class="list-group-item">14: Павлодарская область</li>
+                    <li class="list-group-item">15: Северо-Казахстанская область</li>
+                    <li class="list-group-item">16: Туркестанская область</li>
+                    <li class="list-group-item">17: г.Алматы</li>
+                    <li class="list-group-item">18: г.Астана</li>
+                    <li class="list-group-item">19: г.Шымкент</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
